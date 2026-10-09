@@ -1,10 +1,12 @@
 import { getSession } from '@/lib/auth'
+import { Suspense } from 'react'
+import PortalLoading from '../loading'
 import { db } from '@/lib/db'
 import { notifications } from '@/lib/db/schema'
 import { eq, desc } from 'drizzle-orm'
 import { NotificationList } from '@/components/notifications/NotificationList'
 
-export default async function NotificationsPage() {
+async function NotificationsContent() {
   const session = await getSession()
   if (!session) return null
 
@@ -17,5 +19,13 @@ export default async function NotificationsPage() {
     <div className="mx-auto max-w-4xl pb-24">
       <NotificationList initialNotifications={notifs} />
     </div>
+  )
+}
+
+export default function NotificationsPage() {
+  return (
+    <Suspense fallback={<PortalLoading />}>
+      <NotificationsContent />
+    </Suspense>
   )
 }

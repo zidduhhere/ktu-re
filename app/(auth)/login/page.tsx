@@ -14,8 +14,8 @@ export default function LoginPage() {
         </div>
 
         <div className="relative z-10">
-          <div className="bg-white rounded-2xl p-2 w-16 h-16 flex items-center justify-center shadow-lg">
-            <Image src="/logo.png" alt="KTU Logo" width={48} height={48} className="object-contain" />
+          <div className="bg-white rounded-full p-0.5 w-16 h-16 flex items-center justify-center shadow-lg overflow-hidden">
+            <Image src="/logo.png" alt="KTU Logo" width={64} height={64} className="object-cover h-full w-full" />
           </div>
         </div>
 

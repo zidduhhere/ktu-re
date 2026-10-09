@@ -14,8 +14,8 @@ export function LoginForm() {
     <div className="w-full max-w-sm space-y-8 animate-fade-up">
       <div className="space-y-3 text-center lg:text-left">
         <div className="lg:hidden flex justify-center mb-8">
-           <div className="bg-[var(--color-primary)] rounded-2xl p-2 h-14 w-14 flex items-center justify-center shadow-lg shadow-[var(--color-primary)]/20">
-             <Image src="/logo.png" alt="KTU Logo" width={40} height={40} className="object-contain brightness-0 invert" />
+           <div className="bg-[var(--color-primary)] rounded-full p-0.5 h-14 w-14 flex items-center justify-center shadow-lg shadow-[var(--color-primary)]/20 overflow-hidden">
+             <Image src="/logo.png" alt="KTU Logo" width={56} height={56} className="object-cover h-full w-full brightness-0 invert" />
            </div>
         </div>
         <h2 className="text-3xl font-bold tracking-tight text-[var(--color-text)]">

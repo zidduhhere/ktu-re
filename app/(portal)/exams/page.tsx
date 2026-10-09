@@ -1,13 +1,21 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { Fragment, useState, useEffect, useMemo } from 'react'
 import { ExamTypeFilter } from '@/components/exams/ExamTypeFilter'
 import { ExamCard } from '@/components/exams/ExamCard'
+import { ExamRunway } from '@/components/exams/ExamRunway'
 import { ExamServices } from '@/components/exams/ExamServices'
 import { Pills } from '@/components/exams/Pills'
 import { parseExamDate, daysUntil } from '@/components/exams/examDate'
 import { EXAM_SESSIONS } from '@/lib/exam-sessions'
 import { ExamRow } from '@/lib/types'
+
+const DAY = 86_400_000
+
+/** Whole days free between two consecutive papers (0 when they are on back-to-back days). */
+function daysBetween(a: ExamRow, b: ExamRow) {
+  return Math.max(0, Math.round((parseExamDate(b.date).getTime() - parseExamDate(a.date).getTime()) / DAY) - 1)
+}
 
 export default function ExamsPage() {
   const [semesters, setSemesters] = useState<number[]>([])
@@ -67,80 +75,102 @@ export default function ExamsPage() {
   )
 
   return (
-    <div className="mx-auto max-w-5xl space-y-10 pb-24">
-      {/* Countdown */}
-      <section
-        className={`animate-wipe-in flex min-h-64 flex-col justify-between rounded-[2rem] p-6 md:p-8 ${next ? 'bg-[var(--color-primary)] text-white' : 'bg-[var(--color-surface-accent)] text-[var(--color-ink)]'}`}
-      >
-        <h1 className={`text-base font-medium ${next ? 'text-white/90' : 'text-[var(--color-text-muted)]'}`}>Exams &middot; Semester {activeSem}</h1>
-        {next && nextDays !== null ? (
-          <div>
-            <div className="flex items-end gap-4">
-              <span className="font-display text-[8rem] font-extrabold leading-[0.8] tracking-tighter md:text-[10rem]">{nextDays}</span>
-              <span className="pb-2 font-display text-2xl font-bold leading-tight">
-                {nextDays === 0 ? 'Exam day' : nextDays === 1 ? 'day to go' : 'days to go'}
-                <br />
-                <span className="text-lg font-medium text-white/90">{next.subject}</span>
-              </span>
+    <div className="min-w-0 space-y-8 pb-24">
+      {/* Countdown + semester runway */}
+      <div className="grid grid-cols-1 gap-2 lg:grid-cols-12 [&>*]:min-w-0">
+        <section
+          className={`animate-wipe-in flex min-h-72 flex-col justify-between rounded-[2rem] p-6 md:p-8 lg:col-span-5 ${next ? 'bg-[var(--color-primary)] text-white' : 'bg-[var(--color-surface-accent)] text-[var(--color-ink)]'}`}
+        >
+          <h1 className={`text-base font-medium ${next ? 'text-white/90' : 'text-[var(--color-text-muted)]'}`}>Next exam</h1>
+          {next && nextDays !== null ? (
+            <div>
+              <div className="flex items-end gap-4">
+                <span className="font-display text-[8rem] font-extrabold leading-[0.8] tracking-tighter xl:text-[9rem]">{nextDays}</span>
+                <span className="pb-2 font-display text-2xl font-bold leading-tight">{nextDays === 0 ? 'Exam day' : nextDays === 1 ? 'day to go' : 'days to go'}</span>
+              </div>
+              <p className="mt-5 font-display text-xl font-bold leading-snug">{next.subject}</p>
+              <p className="mt-1 text-base text-white/90">
+                {parseExamDate(next.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}, {next.time}
+              </p>
+              <p className="mt-4 text-sm font-semibold text-white/90">
+                {upcoming} upcoming{completed > 0 ? `, ${completed} completed` : ''}
+              </p>
             </div>
-            <p className="mt-5 text-base text-white/90">
-              {parseExamDate(next.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })} &middot; {next.time}
-            </p>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              <li className="rounded-full bg-white/15 px-4 py-1.5 text-sm font-semibold">{upcoming} upcoming</li>
-              {completed > 0 && <li className="rounded-full bg-white/15 px-4 py-1.5 text-sm font-semibold">{completed} completed</li>}
-            </ul>
-          </div>
-        ) : (
-          <div>
-            <p className="font-display text-4xl font-extrabold leading-tight md:text-5xl">No upcoming exams</p>
-            <p className="mt-2 text-base text-[var(--color-text-muted)]">
-              {completed > 0 ? `${completed} completed in this view.` : 'Nothing is scheduled for this view yet.'}
-            </p>
-          </div>
-        )}
-      </section>
+          ) : (
+            <div>
+              <p className="font-display text-4xl font-extrabold leading-tight md:text-5xl">No upcoming exams</p>
+              <p className="mt-2 text-base text-[var(--color-text-muted)]">
+                {completed > 0 ? `${completed} completed in this view.` : 'Nothing is scheduled for this view yet.'}
+              </p>
+            </div>
+          )}
+        </section>
+        <div className="min-w-0 lg:col-span-7">
+          <ExamRunway exams={exams} semester={activeSem} />
+        </div>
+      </div>
 
       {/* Filters */}
-      <div className="space-y-3">
+      <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
         <Pills
           label="Semester"
-          options={semesters.map(s => ({ id: s, label: `Semester ${s}` }))}
+          options={semesters.map(s => ({ id: s, label: `S${s}`, ariaLabel: `Semester ${s}` }))}
           active={activeSem}
           onChange={setActiveSem}
         />
         <ExamTypeFilter active={activeType} onChange={setActiveType} />
       </div>
 
-      {/* Exam services (register, eligibility, revaluation, review) */}
-      <ExamServices sessions={sessions} />
+      <div className="grid grid-cols-1 gap-x-10 gap-y-10 lg:grid-cols-12">
+        {/* Time table */}
+        <section
+          aria-labelledby="time-table"
+          aria-busy={loading}
+          className={`min-w-0 lg:col-span-8 ${loading ? 'opacity-60 transition-opacity' : 'transition-opacity'}`}
+        >
+          <h2 id="time-table" className="mb-4 font-display text-2xl font-bold text-[var(--color-ink)]">
+            Time table
+          </h2>
+          {groups.length === 0 ? (
+            <p className="rounded-[2rem] bg-[var(--color-surface-accent)] p-8 text-base text-[var(--color-text-muted)]">
+              No time table has been published for this view. Try another semester or exam type.
+            </p>
+          ) : (
+            <div className="space-y-8">
+              {groups.map(group => (
+                <div key={group.label}>
+                  <h3 className="mb-2 text-base font-semibold text-[var(--color-text-muted)]">{group.label}</h3>
+                  <ul className="space-y-1.5">
+                    {group.items.map((exam, i) => {
+                      const prev = group.items[i - 1]
+                      const gap = prev && daysUntil(exam.date) >= 0 && daysUntil(prev.date) >= 0 ? daysBetween(prev, exam) : null
+                      return (
+                        <Fragment key={exam.id}>
+                          {gap !== null && (
+                            <li aria-hidden className="pl-6 text-xs text-[var(--color-text-muted)]">
+                              {gap === 0 ? 'Back to back' : `${gap} ${gap === 1 ? 'day' : 'days'} to prepare`}
+                            </li>
+                          )}
+                          <li>
+                            <ExamCard exam={exam} />
+                          </li>
+                        </Fragment>
+                      )
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
 
-      {/* Time table */}
-      <section aria-labelledby="time-table" aria-busy={loading} className={loading ? 'opacity-60 transition-opacity' : 'transition-opacity'}>
-        <h2 id="time-table" className="mb-4 font-display text-2xl font-bold text-[var(--color-ink)]">
-          Time table
-        </h2>
-        {groups.length === 0 ? (
-          <p className="rounded-[2rem] bg-[var(--color-surface-accent)] p-8 text-base text-[var(--color-text-muted)]">
-            No time table has been published for this view. Try another semester or exam type.
-          </p>
-        ) : (
-          <div className="space-y-6">
-            {groups.map(group => (
-              <div key={group.label}>
-                <h3 className="mb-2 text-base font-semibold text-[var(--color-text-muted)]">{group.label}</h3>
-                <ul className="space-y-1.5">
-                  {group.items.map(exam => (
-                    <li key={exam.id}>
-                      <ExamCard exam={exam} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+        {/* Services rail */}
+        <div className="min-w-0 lg:col-span-4">
+          <div className="lg:sticky lg:top-6">
+            <ExamServices sessions={sessions} />
           </div>
-        )}
-      </section>
+        </div>
+      </div>
     </div>
   )
 }

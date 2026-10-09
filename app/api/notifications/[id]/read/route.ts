@@ -4,7 +4,7 @@ import { db } from '@/lib/db'
 import { notifications } from '@/lib/db/schema'
 import { eq, and } from 'drizzle-orm'
 
-export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PATCH(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const session = await getSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

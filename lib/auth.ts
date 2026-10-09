@@ -39,7 +39,7 @@ export async function getSession(): Promise<SessionPayload | null> {
       algorithms: ['HS256'],
     })
     return payload as SessionPayload
-  } catch (error) {
+  } catch {
     console.log('Failed to verify session')
     return null
   }

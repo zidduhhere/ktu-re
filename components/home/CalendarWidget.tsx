@@ -52,36 +52,36 @@ export function CalendarWidget({ exams }: { exams: ExamDate[] }) {
   }
 
   return (
-    <div className="rounded-[2rem] bg-[var(--color-surface-accent)]">
+    <div className="overflow-hidden rounded-[2rem] bg-[var(--color-surface-accent)]">
          {/* Header */}
-         <div className="flex items-center justify-between p-5">
-           <div className="flex rounded-full bg-[var(--color-surface-accent-hover)] p-1">
+         <div className="flex items-center justify-between bg-[var(--color-primary)] p-5 text-white">
+           <div className="flex rounded-full bg-white/15 p-1">
              <button 
                onClick={() => setView('month')} 
-               className={`p-2 rounded-full transition-colors ${view === 'month' ? 'bg-[var(--color-ink)] text-white' : 'text-[var(--color-text-muted)] hover:text-[var(--color-ink)]'}`}
+               className={`p-2 rounded-full transition-colors ${view === 'month' ? 'bg-white text-[var(--color-primary)]' : 'text-white/85 hover:text-white'}`}
              >
                <CalendarIcon size={16} strokeWidth={2.5} />
              </button>
              <button 
                onClick={() => setView('day')} 
-               className={`p-2 rounded-full transition-colors ${view === 'day' ? 'bg-[var(--color-ink)] text-white' : 'text-[var(--color-text-muted)] hover:text-[var(--color-ink)]'}`}
+               className={`p-2 rounded-full transition-colors ${view === 'day' ? 'bg-white text-[var(--color-primary)]' : 'text-white/85 hover:text-white'}`}
              >
                <LayoutList size={16} strokeWidth={2.5} />
              </button>
            </div>
            
            <div className="flex items-center gap-4">
-             <h3 className="font-display text-base font-bold text-[var(--color-ink)]">
+             <h3 className="font-display text-base font-bold text-white">
                {view === 'month' 
                  ? currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })
                  : selectedDate.toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' })
                }
              </h3>
              <div className="flex gap-1">
-               <button onClick={view === 'month' ? prevMonth : prevDay} className="p-1.5 rounded-full text-[var(--color-text-muted)] hover:bg-[var(--color-surface-accent-hover)] hover:text-[var(--color-ink)] transition-colors cursor-pointer">
+               <button onClick={view === 'month' ? prevMonth : prevDay} className="p-1.5 rounded-full text-white/90 hover:bg-white/15 hover:text-white transition-colors cursor-pointer">
                  <ChevronLeft size={16} strokeWidth={2.5} />
                </button>
-               <button onClick={view === 'month' ? nextMonth : nextDay} className="p-1.5 rounded-full text-[var(--color-text-muted)] hover:bg-[var(--color-surface-accent-hover)] hover:text-[var(--color-ink)] transition-colors cursor-pointer">
+               <button onClick={view === 'month' ? nextMonth : nextDay} className="p-1.5 rounded-full text-white/90 hover:bg-white/15 hover:text-white transition-colors cursor-pointer">
                  <ChevronRight size={16} strokeWidth={2.5} />
                </button>
              </div>
@@ -89,7 +89,7 @@ export function CalendarWidget({ exams }: { exams: ExamDate[] }) {
          </div>
          
          {/* Body */}
-         <div className="px-5 pb-5">
+         <div className="px-5 py-5">
             {view === 'month' ? (
               <div className="animate-fade-up" style={{ animationDuration: '0.2s' }}>
                 <div className="grid grid-cols-7 gap-1 text-center text-xs mb-2 text-[var(--color-text-muted)] font-medium">
@@ -115,7 +115,7 @@ export function CalendarWidget({ exams }: { exams: ExamDate[] }) {
                        >
                          <div className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors font-medium
                            ${isToday ? 'bg-[var(--color-primary)] text-white font-bold' : 
-                             isSelected ? 'bg-[var(--color-ink)] text-white font-bold' :
+                             isSelected ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold' :
                              isHoliday ? 'text-[#B42318] font-bold hover:bg-[var(--color-surface-accent-hover)]' : 
                              'hover:bg-[var(--color-surface-accent-hover)] text-[var(--color-ink)]'}`}
                          >
@@ -124,7 +124,7 @@ export function CalendarWidget({ exams }: { exams: ExamDate[] }) {
                          {/* Indicators */}
                          <div className="absolute bottom-0 flex gap-0.5 mt-1">
                            {hasExam && <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]"></div>}
-                           {hasUniv && <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-ink)]"></div>}
+                           {hasUniv && <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)]"></div>}
                          </div>
                        </div>
                      )
@@ -150,7 +150,7 @@ export function CalendarWidget({ exams }: { exams: ExamDate[] }) {
                     <div className="space-y-2">
                        {events.map((e, i) => (
                          <div key={i} className={`p-4 rounded-2xl ${
-                           e.eventType === 'holiday' ? 'bg-[#F3DEDB]' : e.eventType === 'exam' ? 'bg-[var(--color-primary-soft)]' : 'bg-[var(--color-surface-accent-hover)]'
+                           e.eventType === 'holiday' ? 'bg-[#F3DEDB]' : e.eventType === 'exam' ? 'bg-[var(--color-primary-soft)]' : 'bg-[var(--color-primary-light)]'
                          } flex flex-col`}>
                            <div className="flex justify-between items-start mb-1">
                              <span className={`text-xs font-semibold ${

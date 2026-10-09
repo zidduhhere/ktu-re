@@ -4,6 +4,7 @@ import { getSession } from '@/lib/auth'
 import { AppSidebar } from '@/components/sidebar/AppSidebar'
 import { TopHeader } from '@/components/layout/TopHeader'
 import { UnreadDot } from '@/components/layout/UnreadDot'
+import { ChatbotLauncher } from '@/components/layout/ChatbotLauncher'
 
 export default function PortalLayout({
   children,
@@ -31,6 +32,7 @@ export default function PortalLayout({
           </SessionGate>
         </Suspense>
       </main>
+      <ChatbotLauncher />
     </div>
   )
 }

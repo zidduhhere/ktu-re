@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { exams } from '@/lib/db/schema'
-import { eq, and, asc } from 'drizzle-orm'
+import { eq, asc } from 'drizzle-orm'
 
 export async function GET(request: Request) {
   const session = await getSession()

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { results } from '@/lib/db/schema'
-import { eq, and } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { computeSgpa, gradeToPoints } from '@/lib/types'
 
 export async function GET(request: Request) {

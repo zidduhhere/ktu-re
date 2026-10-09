@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { Suspense } from 'react'
+import PortalLoading from '../../loading'
 import { notFound } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { eq, asc } from 'drizzle-orm'
@@ -9,7 +11,7 @@ import { EXAM_SESSIONS, KIND_LABEL } from '@/lib/exam-sessions'
 import { ExamCard } from '@/components/exams/ExamCard'
 import { SessionActions } from '@/components/exams/SessionActions'
 
-export default async function ExamSessionPage({ params }: { params: Promise<{ sessionId: string }> }) {
+async function ExamSessionContent({ params }: { params: Promise<{ sessionId: string }> }) {
   const { sessionId } = await params
   const session = await getSession()
   if (!session) return null
@@ -21,7 +23,7 @@ export default async function ExamSessionPage({ params }: { params: Promise<{ se
   const schedule = rows.filter(e => exam.semesters.includes(e.semester) && exam.examTypes.includes(e.type))
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8 pb-24">
+    <div className="min-w-0 space-y-8 pb-24">
       <Link
         href="/exams"
         className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
@@ -37,24 +39,36 @@ export default async function ExamSessionPage({ params }: { params: Promise<{ se
         </p>
       </header>
 
-      <SessionActions session={exam} />
+      <div className="grid grid-cols-1 gap-x-10 gap-y-8 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <SessionActions session={exam} />
+        </div>
 
-      <section aria-labelledby="time-table">
-        <h2 id="time-table" className="mb-4 font-display text-2xl font-bold text-[var(--color-ink)]">
-          Time table
-        </h2>
-        {schedule.length === 0 ? (
-          <p className="rounded-[2rem] bg-[var(--color-surface-accent)] p-8 text-base text-[var(--color-text-muted)]">No time table has been published for this exam yet.</p>
-        ) : (
-          <ul className="space-y-1.5">
-            {schedule.map(e => (
-              <li key={e.id}>
-                <ExamCard exam={e} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+        <section aria-labelledby="time-table" className="lg:col-span-7">
+          <h2 id="time-table" className="mb-4 font-display text-2xl font-bold text-[var(--color-ink)]">
+            Time table
+          </h2>
+          {schedule.length === 0 ? (
+            <p className="rounded-[2rem] bg-[var(--color-surface-accent)] p-8 text-base text-[var(--color-text-muted)]">No time table has been published for this exam yet.</p>
+          ) : (
+            <ul className="space-y-1.5">
+              {schedule.map(e => (
+                <li key={e.id}>
+                  <ExamCard exam={e} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </div>
     </div>
+  )
+}
+
+export default function ExamSessionPage({ params }: { params: Promise<{ sessionId: string }> }) {
+  return (
+    <Suspense fallback={<PortalLoading />}>
+      <ExamSessionContent params={params} />
+    </Suspense>
   )
 }

@@ -10,8 +10,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className="h-full antialiased font-sans"
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "try{var t=localStorage.getItem('ktu-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}",
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>
   );

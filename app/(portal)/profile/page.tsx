@@ -1,4 +1,6 @@
 import { getSession } from '@/lib/auth'
+import { Suspense } from 'react'
+import PortalLoading from '../loading'
 import { db } from '@/lib/db'
 import { students } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
@@ -15,7 +17,7 @@ function Field({ label, value, mono, onDark }: { label: string; value: string; m
   )
 }
 
-export default async function ProfilePage() {
+async function ProfileContent() {
   const session = await getSession()
   if (!session) return null
 
@@ -74,5 +76,13 @@ export default async function ProfilePage() {
         </div>
       </section>
     </div>
+  )
+}
+
+export default function ProfilePage() {
+  return (
+    <Suspense fallback={<PortalLoading />}>
+      <ProfileContent />
+    </Suspense>
   )
 }

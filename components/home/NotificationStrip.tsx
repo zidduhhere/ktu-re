@@ -9,7 +9,7 @@ export function NotificationStrip({ notifications }: { notifications: Notificati
   return (
     <Card className="rounded-2xl border-none shadow-sm overflow-hidden flex items-center bg-white">
       <div className="flex-1 flex overflow-hidden">
-        {notifications.map((notif, i) => {
+        {notifications.map((notif) => {
           const Icon = notif.type === 'result' ? FileText : notif.type === 'exam' ? CalendarDays : Bell
           return (
             <div 

@@ -10,8 +10,10 @@ import { CalendarWidget } from '@/components/home/CalendarWidget'
 import { SidebarNotifications } from '@/components/home/SidebarNotifications'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { Suspense } from 'react'
+import PortalLoading from '../loading'
 
-export default async function HomePage() {
+async function HomeContent() {
   const session = await getSession()
   if (!session) return null
 
@@ -188,5 +190,13 @@ export default async function HomePage() {
         </div>
       </section>
     </div>
+  )
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={<PortalLoading />}>
+      <HomeContent />
+    </Suspense>
   )
 }
