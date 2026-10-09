@@ -15,7 +15,9 @@ The original KTU portal was overwhelming, presenting too much irrelevant informa
 
 This project is a **re-imagination** of the KTU student portal, built on the principle of Hick's Law: *minimizing choices to reduce cognitive load*. It aims to get students the information they need—results, exams, and basic metrics—as quickly and painlessly as possible, so they can get back to their lives.
 
-## 📸 Screenshots
+## 📸 Screenshots & Demo
+
+[**▶️ Watch the Video Walkthrough**](https://drive.google.com/drive/u/0/folders/1Ij-sYniUK3YA2PiJPSSKVbqNpSbOQPzX)
 
 ### 🏠 Home Dashboard
 A clean, high-contrast overview of your current academic standing, next exam, and recent notifications. The dashboard avoids clutter and gives a bird's-eye view.
