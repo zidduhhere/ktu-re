@@ -69,11 +69,23 @@ cd ktu-re
 npm install
 ```
 
-### 3. Setup the Database
-Seed the local SQLite database with test data (this provides a test user `TVE22CS001` with password `student123`):
+### 3. Set up the environment and sign in
+
+The repository ships with a ready-to-use SQLite database (`dev.db`) that already contains demo data, so there is nothing to seed. Create your environment file once (it is git-ignored), then sign in with the demo login:
+
 ```bash
-npx tsx lib/db/seed.ts
+cp .env.example .env
 ```
+
+| Register number | Password | Student |
+|---|---|---|
+| `TVE23CS034` | `demo1234` | Rahul Krishnan, B.Tech CSE, semester 6 |
+
+This account has results for semesters 1-6 (8 subjects each, including one cleared supplementary and one open backlog), upcoming minor and end-semester exams, a scheduled supplementary exam, and six notifications (four unread).
+
+The database also holds earlier test accounts: `TVE23CS021` / `12345` (Anjali Menon), `ACE23CS010` / `12345` (Test Student) and `TVE22CS001` / `student123` (Aleena Jaison).
+
+> Running `npx tsx lib/db/seed.ts` resets the database to a single base account (`TVE22CS001`) and removes the demo users above.
 
 ### 4. Run the development server
 ```bash
@@ -81,7 +93,7 @@ npm run dev
 ```
 
 ### 5. Open your browser
-Navigate to [http://localhost:3000](http://localhost:3000) to view the portal. You can log in using the credentials from the seed data.
+Navigate to [http://localhost:3000](http://localhost:3000) to view the portal. You can sign in with the demo login above.
 
 ---
 
