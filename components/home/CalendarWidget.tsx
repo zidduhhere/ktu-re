@@ -57,16 +57,18 @@ export function CalendarWidget({ exams }: { exams: ExamDate[] }) {
          <div className="flex items-center justify-between bg-[var(--color-primary)] p-5 text-white">
            <div className="flex rounded-full bg-white/15 p-1">
              <button 
+               type="button"
                onClick={() => setView('month')} 
-               className={`p-2 rounded-full transition-colors ${view === 'month' ? 'bg-white text-[var(--color-primary)]' : 'text-white/85 hover:text-white'}`}
+               className={`p-2 rounded-full transition-colors cursor-pointer ${view === 'month' ? 'bg-white text-[var(--color-primary)]' : 'text-white/85 hover:text-white'}`}
              >
-               <CalendarIcon size={16} strokeWidth={2.5} />
+               <CalendarIcon size={16} strokeWidth={2.5} className="pointer-events-none" />
              </button>
              <button 
+               type="button"
                onClick={() => setView('day')} 
-               className={`p-2 rounded-full transition-colors ${view === 'day' ? 'bg-white text-[var(--color-primary)]' : 'text-white/85 hover:text-white'}`}
+               className={`p-2 rounded-full transition-colors cursor-pointer ${view === 'day' ? 'bg-white text-[var(--color-primary)]' : 'text-white/85 hover:text-white'}`}
              >
-               <LayoutList size={16} strokeWidth={2.5} />
+               <LayoutList size={16} strokeWidth={2.5} className="pointer-events-none" />
              </button>
            </div>
            
@@ -78,11 +80,11 @@ export function CalendarWidget({ exams }: { exams: ExamDate[] }) {
                }
              </h3>
              <div className="flex gap-1">
-               <button onClick={view === 'month' ? prevMonth : prevDay} className="p-1.5 rounded-full text-white/90 hover:bg-white/15 hover:text-white transition-colors cursor-pointer">
-                 <ChevronLeft size={16} strokeWidth={2.5} />
+               <button type="button" onClick={view === 'month' ? prevMonth : prevDay} className="p-1.5 rounded-full text-white/90 hover:bg-white/15 hover:text-white transition-colors cursor-pointer">
+                 <ChevronLeft size={16} strokeWidth={2.5} className="pointer-events-none" />
                </button>
-               <button onClick={view === 'month' ? nextMonth : nextDay} className="p-1.5 rounded-full text-white/90 hover:bg-white/15 hover:text-white transition-colors cursor-pointer">
-                 <ChevronRight size={16} strokeWidth={2.5} />
+               <button type="button" onClick={view === 'month' ? nextMonth : nextDay} className="p-1.5 rounded-full text-white/90 hover:bg-white/15 hover:text-white transition-colors cursor-pointer">
+                 <ChevronRight size={16} strokeWidth={2.5} className="pointer-events-none" />
                </button>
              </div>
            </div>

@@ -42,3 +42,17 @@ export const notifications = sqliteTable('notifications', {
   read: integer('read', { mode: 'boolean' }).notNull().default(false),
   createdAt: text('created_at').notNull(), // ISO string
 })
+
+export const raggingReports = sqliteTable('ragging_reports', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  reference: text('reference').notNull().unique(), // e.g. "AR-2026-K7M2QX"
+  studentId: text('student_id').references(() => students.id), // null when reported anonymously
+  category: text('category').notNull(),
+  incidentDate: text('incident_date').notNull(), // YYYY-MM-DD
+  location: text('location').notNull(),
+  description: text('description').notNull(),
+  peopleInvolved: text('people_involved'),
+  anonymous: integer('anonymous', { mode: 'boolean' }).notNull().default(false),
+  status: text('status').notNull().default('submitted'),
+  createdAt: text('created_at').notNull(), // ISO string
+})

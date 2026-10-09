@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Search, LayoutDashboard, BarChart2, CalendarDays, Bell, User, type LucideIcon } from 'lucide-react'
+import { Search, LayoutDashboard, BarChart2, CalendarDays, Bell, User, ShieldAlert, type LucideIcon } from 'lucide-react'
 
 type PageResult = {
   href: string
@@ -16,6 +16,7 @@ const PAGES: PageResult[] = [
   { href: '/results', title: 'Academic Results', icon: BarChart2, meta: 'Grades, SGPA, and cumulative performance' },
   { href: '/exams', title: 'Examinations', icon: CalendarDays, meta: 'Schedules, timetables, and hall tickets' },
   { href: '/notifications', title: 'Inbox & Updates', icon: Bell, meta: 'Official announcements and alerts' },
+  { href: '/anti-ragging', title: 'Anti-ragging Report', icon: ShieldAlert, meta: 'Report an incident or call the helpline' },
   { href: '/profile', title: 'My Profile', icon: User, meta: 'Personal info, academic details, and security' },
 ]
 

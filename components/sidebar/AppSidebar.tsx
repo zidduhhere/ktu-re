@@ -3,13 +3,15 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { House, BarChart2, CalendarDays, Bell, LogOut, User } from 'lucide-react'
+import { House, BarChart2, CalendarDays, Bell, LogOut, User, ShieldAlert, Phone } from 'lucide-react'
+import { HELPLINE } from '@/lib/ragging'
 
 const NAV = [
   { href: '/home', icon: House, label: 'Dashboard' },
   { href: '/results', icon: BarChart2, label: 'Results' },
   { href: '/exams', icon: CalendarDays, label: 'Exams' },
   { href: '/notifications', icon: Bell, label: 'Notifications' },
+  { href: '/anti-ragging', icon: ShieldAlert, label: 'Anti-ragging' },
 ]
 
 const ITEM =
@@ -61,6 +63,15 @@ export function AppSidebar({ badges = {} }: { badges?: Record<string, React.Reac
 
       {/* Bottom Nav */}
       <div className="mt-3 flex w-full flex-col gap-1 border-t border-white/15 pt-3">
+        <a
+          href={HELPLINE.tel}
+          aria-label={`Call the anti-ragging helpline, ${HELPLINE.display}`}
+          title={`Anti-ragging helpline ${HELPLINE.display}`}
+          className={`${ITEM} text-white/75 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white`}
+        >
+          <Phone size={20} strokeWidth={1.75} className="shrink-0" aria-hidden />
+          <span className={LABEL}>Call helpline</span>
+        </a>
         <Link
           href="/profile"
           aria-label="Profile"
