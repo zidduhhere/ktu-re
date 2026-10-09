@@ -54,7 +54,6 @@ export type ExamRow = {
   subjectCode: string
   date: string
   time: string
-  venue: string
   hallTicket: string | null
 }
 

@@ -38,8 +38,8 @@ async function seed() {
 
   console.log('Seeding exams...')
   const examData = [
-    { studentId: 'TVE22CS001', semester: 5, type: 'ese', subject: 'Operating Systems', subjectCode: 'CS501', date: '2026-11-12', time: '09:30 AM - 12:30 PM', venue: 'Main Hall', hallTicket: 'HT501' },
-    { studentId: 'TVE22CS001', semester: 5, type: 'minor', subject: 'Web Programming', subjectCode: 'CS505', date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], time: '01:30 PM - 04:30 PM', venue: 'Lab 1', hallTicket: null }, // In 3 days
+    { studentId: 'TVE22CS001', semester: 5, type: 'ese', subject: 'Operating Systems', subjectCode: 'CS501', date: '2026-11-12', time: '09:30 AM - 12:30 PM', hallTicket: 'HT501' },
+    { studentId: 'TVE22CS001', semester: 5, type: 'minor', subject: 'Web Programming', subjectCode: 'CS505', date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], time: '01:30 PM - 04:30 PM', hallTicket: null }, // In 3 days
   ]
   for (const e of examData) {
     db.insert(exams).values(e).run()

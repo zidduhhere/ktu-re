@@ -30,7 +30,6 @@ export const exams = sqliteTable('exams', {
   subjectCode: text('subject_code').notNull(),
   date: text('date').notNull(), // ISO string
   time: text('time').notNull(),
-  venue: text('venue').notNull(),
   hallTicket: text('hall_ticket'),
 })
 

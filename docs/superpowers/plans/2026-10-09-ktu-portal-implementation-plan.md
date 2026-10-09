@@ -542,7 +542,6 @@ ShadCN `<Card>` with `rounded-2xl`.
 - Left border accent `border-l-4 border-[var(--color-primary)]` when exam date is within 7 days of now
 - Row 1: subject name (bold) + `<Badge>` for type (ESE/Minor/Major/Supply)
 - Row 2: `<CalendarDays size={14}>` + formatted date, `<Clock size={14}>` + time
-- Row 3: `<MapPin size={14}>` + venue
 - Row 4 (if `hallTicket`): dimmed text with hall ticket number
 
 - [ ] **Step 4: Write `app/(portal)/exams/page.tsx`**

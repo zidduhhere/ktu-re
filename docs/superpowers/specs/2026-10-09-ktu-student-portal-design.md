@@ -145,7 +145,6 @@ model Exam {
   subjectCode String
   date        DateTime
   time        String
-  venue       String
   hallTicket  String?
   student     Student  @relation(fields: [studentId], references: [id])
 }
@@ -343,7 +342,7 @@ All protected routes return `401` if session cookie is absent.
 - Exam cards grid, `rounded-2xl`:
   - Subject name (bold) + code (muted)
   - Exam type badge (coloured pill)
-  - Date (CalendarDays icon), Time (Clock icon), Venue (MapPin icon)
+  - Date (CalendarDays icon), Time (Clock icon)
   - Hall ticket number (dimmed, if available)
   - Exams within 7 days: `#0720FF` left border accent
 - Empty state: "No exams scheduled" + CalendarDays icon
