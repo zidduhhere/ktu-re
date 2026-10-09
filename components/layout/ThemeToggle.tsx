@@ -18,6 +18,7 @@ export function ThemeToggle() {
 
   return (
     <button
+      id="theme-toggle"
       type="button"
       onClick={toggleTheme}
       aria-label="Toggle Theme"

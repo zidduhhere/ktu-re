@@ -45,6 +45,7 @@ export function AppSidebar({ badges = {} }: { badges?: Record<string, React.Reac
           return (
             <Link
               key={item.href}
+              id={`nav-${item.label.toLowerCase()}`}
               href={item.href}
               aria-label={item.label}
               aria-current={isActive ? 'page' : undefined}

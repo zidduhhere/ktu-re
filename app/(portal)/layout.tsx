@@ -5,6 +5,7 @@ import { AppSidebar } from '@/components/sidebar/AppSidebar'
 import { TopHeader } from '@/components/layout/TopHeader'
 import { UnreadDot } from '@/components/layout/UnreadDot'
 import { ChatbotLauncher } from '@/components/layout/ChatbotLauncher'
+import { OnboardingTour } from '@/components/layout/OnboardingTour'
 
 export default function PortalLayout({
   children,
@@ -29,6 +30,7 @@ export default function PortalLayout({
           <SessionGate>
             <TopHeader />
             {children}
+            <OnboardingTour />
           </SessionGate>
         </Suspense>
       </main>

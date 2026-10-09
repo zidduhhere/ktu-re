@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react'
 import { Bot, Construction, SendHorizontal, X } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export function ChatbotLauncher() {
   const [open, setOpen] = useState(false)
@@ -28,8 +29,10 @@ export function ChatbotLauncher() {
         id={panelId}
         role="dialog"
         aria-label="AI assistant"
-        hidden={!open}
-        className="w-[min(22rem,calc(100vw-3rem))] overflow-hidden rounded-[2rem] bg-[var(--color-surface-accent)]"
+        className={cn(
+          "w-[min(22rem,calc(100vw-3rem))] overflow-hidden rounded-[2rem] bg-[var(--color-surface-accent)] shadow-2xl transition-all duration-300 origin-bottom-right",
+          open ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+        )}
       >
         <div className="flex items-center justify-between bg-[var(--color-primary)] px-5 py-4 text-white">
           <div className="flex items-center gap-3">
@@ -85,9 +88,14 @@ export function ChatbotLauncher() {
         aria-expanded={open}
         aria-controls={panelId}
         aria-label={open ? 'Close AI assistant' : 'Open AI assistant'}
-        className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-[var(--color-primary)] text-white transition-colors hover:bg-[var(--color-primary-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+        className="relative flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-[var(--color-primary)] text-white shadow-lg transition-transform duration-300 hover:scale-110 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
       >
-        {open ? <X size={22} aria-hidden /> : <Bot size={24} aria-hidden />}
+        <div className={cn("absolute transition-all duration-300", open ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100")}>
+          <Bot size={24} aria-hidden />
+        </div>
+        <div className={cn("absolute transition-all duration-300", open ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0")}>
+          <X size={22} aria-hidden />
+        </div>
       </button>
     </div>
   )
