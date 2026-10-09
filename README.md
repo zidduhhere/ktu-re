@@ -2,6 +2,20 @@
 
 A beautiful, modern, and minimalist redesign of the KTU student portal. Designed with a focus on reducing cognitive load and surfacing the most important academic information at a glance.
 
+## Screenshots
+
+### 🏠 Home Dashboard
+A clean, high-contrast overview of your current academic standing, next exam, and recent notifications.
+![Home Screen Dashboard](docs/home.png)
+
+### 📊 Results
+A simplified, distraction-free view of your semester results with clear visual indicators for performance.
+![Results Screen](docs/results.png)
+
+### 📅 Exams
+An organized, chronological view of your upcoming examination schedule.
+![Exams Screen](docs/exams.png)
+
 ## Features
 
 - **Minimalist Dashboard**: Clean, Swiss-inspired design using the Satoshi font to present data clearly.
